@@ -13,10 +13,10 @@ struct StatusBadgeView: View {
 
     private var color: Color {
         switch status {
-        case .new:        return .blue
+        case .new: return .blue
         case .inProgress: return .orange
-        case .done:       return .green
-        case .cancelled:  return .gray
+        case .done: return .green
+        case .cancelled: return .gray
         }
     }
 

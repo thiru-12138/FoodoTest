@@ -63,7 +63,6 @@ final class ItemListViewModel: ObservableObject {
     private func fetch() async {
         viewState = .loading
 
-        // If offline → load cache only
         guard networkMonitor.isConnected else {
             do {
                 let cached = try repository.cachedItems()
@@ -151,6 +150,7 @@ final class ItemListViewModel: ObservableObject {
         }
     }
     
+    // MARK: - Delete Item
     func delete(id: String) {
         Task {
             try? await repository.deleteEvent(id: id)

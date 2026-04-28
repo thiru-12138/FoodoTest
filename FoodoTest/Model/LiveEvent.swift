@@ -9,7 +9,6 @@ import Foundation
 import SwiftUI
 
 // MARK: - Live Event
-
 struct LiveEvent: Codable {
     let type: EventType
     let item: ModelItem

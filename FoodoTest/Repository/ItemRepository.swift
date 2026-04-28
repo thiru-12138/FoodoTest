@@ -86,7 +86,7 @@ final class ItemRepository: ItemRepositoryProtocol {
         return Date().timeIntervalSince(cachedAt) > cacheTTL
     }
 
-    // MARK: - Apply Live Event (Option B)
+    // MARK: - Apply Live Event
     func applyEvent(_ event: LiveEvent) async throws {
         let ctx = persistence.newBackgroundContext()
 
@@ -94,7 +94,6 @@ final class ItemRepository: ItemRepositoryProtocol {
             switch event.type {
             case .created, .updated, .cancelled:
                 let entity = self.findOrCreate(id: event.item.id, in: ctx)
-                // Only apply if event is newer than stored
                 if let existing = entity.updatedAt {
                     guard event.item.updatedAt > existing else { return }
                 }
@@ -128,6 +127,7 @@ final class ItemRepository: ItemRepositoryProtocol {
         return entity
     }
     
+    // MARK: - Delete Event
     func deleteEvent(id: String) async throws {
         let ctx = persistence.newBackgroundContext()
         

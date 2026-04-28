@@ -10,7 +10,6 @@ import CoreData
 
 @main
 struct FoodoTestApp: App {
-    
     private let deps = AppDependencies()
 
     var body: some Scene {
