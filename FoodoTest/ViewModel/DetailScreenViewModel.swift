@@ -1,5 +1,5 @@
 //
-//  ItemDetailViewModel.swift
+//  DetailScreenViewModel.swift
 //  FoodoTest
 //
 //  Created by Thirumalai Ganesh G on 28/04/26.
@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 @MainActor
-final class ItemDetailViewModel: ObservableObject {
+final class DetailScreenViewModel: ObservableObject {
 
     @Published private(set) var item: ModelItem
     @Published private(set) var isOffline: Bool

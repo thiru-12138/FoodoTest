@@ -1,5 +1,5 @@
 //
-//  ItemListView.swift
+//  ListScreenView.swift
 //  FoodoTest
 //
 //  Created by Thirumalai Ganesh G on 28/04/26.
@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct ItemListView: View {
+struct ListScreenView: View {
 
-    @EnvironmentObject private var viewModel: ItemListViewModel
+    @EnvironmentObject private var viewModel: ListScreenViewModel
 
     var body: some View {
         ZStack {
@@ -41,8 +41,8 @@ struct ItemListView: View {
                 )
             } else {
                 List(viewModel.items) { item in
-                    NavigationLink(destination: itemDetail(for: item)) {
-                        ItemRowView(item: item)
+                    NavigationLink(destination: listDetail(for: item)) {
+                        ListRowView(item: item)
                             .swipeActions(content: {
                                 Button(role: .destructive, action: {
                                     viewModel.delete(id: item.id)
@@ -89,9 +89,9 @@ struct ItemListView: View {
     }
 
     // MARK: - Helpers
-    private func itemDetail(for item: ModelItem) -> some View {
-        ItemDetailView(
-            viewModel: ItemDetailViewModel(
+    private func listDetail(for item: ModelItem) -> some View {
+        DetailScreenView(
+            viewModel: DetailScreenViewModel(
                 item: item,
                 repository: AppDependencies().repository,
                 networkMonitor: .shared

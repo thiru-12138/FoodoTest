@@ -9,11 +9,11 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
-    @EnvironmentObject var viewModel: ItemListViewModel
+    @EnvironmentObject var viewModel: ListScreenViewModel
 
     var body: some View {
         NavigationStack {
-            ItemListView()
+            ListScreenView()
         }
         .onAppear {
             viewModel.loadItems()

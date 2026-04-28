@@ -47,7 +47,7 @@ final class MockItemRepository: ItemRepositoryProtocol {
 // MARK: - Tests
 final class ViewModelTests: XCTestCase {
 
-    private var viewModel: ItemListViewModel!
+    private var viewModel: ListScreenViewModel!
     private var mockRepo: MockItemRepository!
     private var networkMonitor: NetworkMonitor!
     private var cancellables = Set<AnyCancellable>()
@@ -57,7 +57,7 @@ final class ViewModelTests: XCTestCase {
         super.setUp()
         mockRepo = MockItemRepository()
         networkMonitor = NetworkMonitor()
-        viewModel = ItemListViewModel(
+        viewModel = ListScreenViewModel(
             repository: mockRepo,
             networkMonitor: networkMonitor
         )

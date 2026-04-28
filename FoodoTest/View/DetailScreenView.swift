@@ -1,5 +1,5 @@
 //
-//  ItemDetailView.swift
+//  DetailScreenView.swift
 //  FoodoTest
 //
 //  Created by Thirumalai Ganesh G on 28/04/26.
@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct ItemDetailView: View {
-    @ObservedObject var viewModel: ItemDetailViewModel
+struct DetailScreenView: View {
+    @ObservedObject var viewModel: DetailScreenViewModel
 
     var body: some View {
         ScrollView {

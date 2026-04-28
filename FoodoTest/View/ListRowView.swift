@@ -1,5 +1,5 @@
 //
-//  ItemRowView.swift
+//  ListRowView.swift
 //  FoodoTest
 //
 //  Created by Thirumalai Ganesh G on 28/04/26.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ItemRowView: View {
+struct ListRowView: View {
     let item: ModelItem
 
     var body: some View {

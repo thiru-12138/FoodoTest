@@ -1,5 +1,5 @@
 //
-//  ItemListViewModel.swift
+//  ListScreenViewModel.swift
 //  FoodoTest
 //
 //  Created by Thirumalai Ganesh G on 28/04/26.
@@ -10,7 +10,7 @@ import Combine
 import CoreData
 
 @MainActor
-final class ItemListViewModel: ObservableObject {
+final class ListScreenViewModel: ObservableObject {
 
     // MARK: - UI State
     enum ViewState: Equatable {
@@ -37,6 +37,7 @@ final class ItemListViewModel: ObservableObject {
     private var eventQueue: [LiveEvent] = []
     private var eventIndex = 0
     private let eventInterval: TimeInterval = 10
+    private var task: Task<Void, Never>? = nil
 
     // MARK: - Init
     init(repository: ItemRepositoryProtocol,
@@ -52,11 +53,13 @@ final class ItemListViewModel: ObservableObject {
     // MARK: - Public Actions
 
     func loadItems() {
-        Task { await fetch() }
+        task?.cancel()
+        task = Task { await fetch() }
     }
 
     func refresh() {
-        Task { await fetch() }
+        task?.cancel()
+        task = Task { await fetch() }
     }
 
     // MARK: - Private Fetch Logic
@@ -145,15 +148,21 @@ final class ItemListViewModel: ObservableObject {
         let event = eventQueue[eventIndex]
         eventIndex += 1
 
-        Task {
+        task?.cancel()
+        task = Task {
             try? await repository.applyEvent(event)
         }
     }
     
     // MARK: - Delete Item
     func delete(id: String) {
-        Task {
+        task?.cancel()
+        task = Task {
             try? await repository.deleteEvent(id: id)
         }
+    }
+    
+    deinit {
+        task?.cancel()
     }
 }

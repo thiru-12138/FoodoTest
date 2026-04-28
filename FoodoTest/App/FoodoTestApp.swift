@@ -18,7 +18,7 @@ struct FoodoTestApp: App {
                 .environment(\.managedObjectContext,
                               deps.persistence.container.viewContext)
                 .environmentObject(
-                    ItemListViewModel(
+                    ListScreenViewModel(
                         repository: deps.repository,
                         networkMonitor: deps.networkMonitor
                     )
