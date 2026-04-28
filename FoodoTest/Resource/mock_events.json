@@ -1,0 +1,42 @@
+[
+  {
+    "type": "created",
+    "item": {
+      "id": "D001",
+      "title": "New Live Item",
+      "status": "new",
+      "detail": "Created by live event stream",
+      "updatedAt": "2026-04-01T08:00:00Z"
+    }
+  },
+  {
+    "type": "updated",
+    "item": {
+      "id": "A001",
+      "title": "Alpha Task (Updated)",
+      "status": "in_progress",
+      "detail": "Status moved to in-progress by live event",
+      "updatedAt": "2026-04-01T09:00:00Z"
+    }
+  },
+  {
+    "type": "cancelled",
+    "item": {
+      "id": "B002",
+      "title": "Beta Task",
+      "status": "cancelled",
+      "detail": "Cancelled via event stream",
+      "updatedAt": "2026-04-01T10:00:00Z"
+    }
+  },
+  {
+    "type": "created",
+    "item": {
+      "id": "E005",
+      "title": "Emergency Fix",
+      "status": "in_progress",
+      "detail": "High priority item added live",
+      "updatedAt": "2026-04-01T11:00:00Z"
+    }
+  }
+]

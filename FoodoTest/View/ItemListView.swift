@@ -1,0 +1,109 @@
+//
+//  ItemListView.swift
+//  FoodoTest
+//
+//  Created by Thirumalai Ganesh G on 28/04/26.
+//
+
+import SwiftUI
+
+struct ItemListView: View {
+
+    @EnvironmentObject private var viewModel: ItemListViewModel
+
+    var body: some View {
+        ZStack {
+            listContent
+                .navigationTitle("Foodo Items")
+                .toolbar { refreshToolbar }
+                .refreshable { viewModel.refresh() }
+
+            overlayContent
+        }
+        .safeAreaInset(edge: .top) {
+            if viewModel.isOffline { OfflineBannerView() }
+        }
+    }
+
+    // MARK: - List / State Views
+    @ViewBuilder
+    private var listContent: some View {
+        switch viewModel.viewState {
+        case .idle, .loading:
+            loadingView
+
+        case .success, .error:
+            if viewModel.items.isEmpty {
+                EmptyStateView(
+                    icon: "tray",
+                    title: "No Items",
+                    message: "Pull down to refresh."
+                )
+            } else {
+                List(viewModel.items) { item in
+                    NavigationLink(destination: itemDetail(for: item)) {
+                        ItemRowView(item: item)
+                            .swipeActions(content: {
+                                Button(role: .destructive, action: {
+                                    viewModel.delete(id: item.id)
+                                })
+                            })
+                    }
+                    .listRowSeparator(.hidden)
+                    .listRowInsets(.init(top: 6, leading: 16, bottom: 6, trailing: 16))
+                }
+                .listStyle(.plain)
+                .animation(.easeInOut, value: viewModel.items)
+            }
+
+        case .empty:
+            EmptyStateView(
+                icon: "tray",
+                title: "No Items Yet",
+                message: "No data available."
+            )
+        }
+    }
+
+    @ViewBuilder
+    private var overlayContent: some View {
+        if case .error(let msg) = viewModel.viewState {
+            VStack {
+                Spacer()
+                ErrorBannerView(message: msg) {
+                    viewModel.refresh()
+                }
+                .padding()
+            }
+        }
+    }
+
+    private var loadingView: some View {
+        VStack(spacing: 16) {
+            ProgressView()
+            Text("Loading…")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
+    // MARK: - Helpers
+    private func itemDetail(for item: ModelItem) -> some View {
+        ItemDetailView(
+            viewModel: ItemDetailViewModel(
+                item: item,
+                repository: AppDependencies().repository,
+                networkMonitor: .shared
+            )
+        )
+    }
+
+    private var refreshToolbar: some ToolbarContent {
+        ToolbarItem(placement: .navigationBarTrailing) {
+            Button { viewModel.refresh() } label: {
+                Text("Refresh")
+            }
+        }
+    }
+}
