@@ -44,7 +44,7 @@ struct ListScreenView: View {
                     NavigationLink(destination: listDetail(for: item)) {
                         ListRowView(item: item)
                             .swipeActions(content: {
-                                Button(role: .destructive, action: {
+                                Button("Delete", role: .destructive, action: {
                                     viewModel.delete(id: item.id)
                                 })
                             })
